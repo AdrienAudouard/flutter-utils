@@ -4,7 +4,7 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils functions for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -18,9 +18,6 @@
     "utils",
     "test",
     "dart"
-  ],
-  "activationEvents": [
-    "onCommand:flutter-utils.generateEquals"
   ],
   "main": "./dist/extension.js",
   "contributes": {
