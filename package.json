@@ -1,0 +1,89 @@
+{
+  "name": "flutter-utils",
+  "displayName": "Flutter Utils",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:flutter-utils.generateEquals"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "flutter-utils.goTestFile",
+        "title": "Open test file"
+      },
+      {
+        "command": "flutter-utils.goSourceFile",
+        "title": "Open source file"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "flutter-utils.goTestFile",
+          "when": "resourceLangId == dart && resourceFilename =~ /(?<!_test)\\.dart/"
+        },
+        {
+          "command": "flutter-utils.goSourceFile",
+          "when": "resourceLangId == dart && resourceFilename =~ /_test.dart/"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "flutter-utils.goTestFile",
+          "group": "navigation",
+          "when": "resourceLangId == dart && resourceFilename =~ /(?<!_test)\\.dart/"
+        },
+        {
+          "command": "flutter-utils.goSourceFile",
+          "group": "navigation",
+          "when": "resourceLangId == dart && resourceFilename =~ /_test.dart/"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Flutter utils",
+      "properties": {
+        "flutter-utils.testFileFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Folder who contains the test inside /test"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.3",
+    "ts-loader": "^9.4.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "@vscode/test-electron": "^2.2.0"
+  }
+}
