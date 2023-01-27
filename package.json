@@ -1,13 +1,21 @@
 {
   "name": "flutter-utils",
   "displayName": "Flutter Utils",
-  "description": "",
-  "version": "0.0.1",
+  "publisher": "Adrien Audouard",
+  "description": "Provide some utils functions for flutter projects",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
+    "Snippets",
     "Other"
+  ],
+  "keywords": [
+    "flutter",
+    "utils",
+    "test",
+    "dart"
   ],
   "activationEvents": [
     "onCommand:flutter-utils.generateEquals"
