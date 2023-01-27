@@ -20,6 +20,11 @@
     "dart"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:dart",
+    "onCommand:flutter-utils.goTestFile",
+    "onCommand:flutter-utils.goSourceFile"
+  ],
   "contributes": {
     "commands": [
       {
