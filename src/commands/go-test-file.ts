@@ -1,7 +1,11 @@
 import * as fs from 'fs';
 import * as p from 'path';
 import * as vscode from 'vscode';
+import { findClosestTestFiles } from '../utils/files-utils';
 import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnippet, openDocumentInEditor } from '../utils/utils';
+
+const createLabel = 'Create test file';
+const cancelLabel = 'Cancel';
 
 export async function goTestFile() {
     const editor = vscode.window.activeTextEditor;
@@ -32,18 +36,31 @@ export async function goTestFile() {
     const exist = fs.existsSync(testPathAbsolute);
 
     if (!exist) {
-        const selection = await vscode.window.showQuickPick(["Yes", "No"], { "placeHolder": "Test file do not exists'. Do you want to create it?" });
+        const closest = findClosestTestFiles(testPathAbsolute);
+        const options = [createLabel, cancelLabel, ...closest.map((file: { target: String, rating: number }) => {
+            const percent = (file.rating * 100).toFixed(2);
+            return getRelativePath(file.target) + ' - ' + percent + ' %';
+        })];
 
-        if (selection !== 'Yes') {
+        const selection = await vscode.window.showQuickPick(options, { "title": "Test file do not exists. Do you want to create it?" });
+
+        if (selection === cancelLabel || !options.includes(selection)) {
             return;
         }
 
-        fs.mkdirSync(p.dirname(testPathAbsolute), { recursive: true });
+        if (selection === createLabel) {
+            fs.mkdirSync(p.dirname(testPathAbsolute), { recursive: true });
 
-        fs.writeFileSync(testPathAbsolute, getTestFileSnippet());
+            fs.writeFileSync(testPathAbsolute, getTestFileSnippet());
 
-        vscode.window.showInformationMessage('Test file created');
+            vscode.window.showInformationMessage('Test file created');
+
+            openDocumentInEditor(testPathAbsolute);
+        } else {
+            const selectionPath = selection.split('-')[0].trim();
+            openDocumentInEditor(getAbsolutePath(selectionPath));
+        }
+    } else {
+        openDocumentInEditor(testPathAbsolute);
     }
-
-    openDocumentInEditor(testPathAbsolute);
 }
