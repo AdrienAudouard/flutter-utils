@@ -30,3 +30,17 @@ export function openDocumentInEditor(filePath: string) {
         vscode.window.showTextDocument(doc);
     });
 }
+
+export function getTestFileSnippet(): string {
+
+    return `import 'package:test/test.dart'; 
+
+void main() {
+	group(
+		'', 
+		() {
+			
+		},
+	);
+}`;
+}

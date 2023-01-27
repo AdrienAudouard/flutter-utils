@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as p from 'path';
 import * as vscode from 'vscode';
-import { getAbsolutePath, getRelativePath, getRelativeTestPath, openDocumentInEditor } from '../utils/utils';
+import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnippet, openDocumentInEditor } from '../utils/utils';
 
 export async function goTestFile() {
     const editor = vscode.window.activeTextEditor;
@@ -40,7 +40,7 @@ export async function goTestFile() {
 
         fs.mkdirSync(p.dirname(testPathAbsolute), { recursive: true });
 
-        fs.writeFileSync(testPathAbsolute, '');
+        fs.writeFileSync(testPathAbsolute, getTestFileSnippet());
 
         vscode.window.showInformationMessage('Test file created');
     }
