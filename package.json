@@ -4,9 +4,9 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils functions for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.52.0"
   },
   "license": "LICENSE",
   "categories": [
