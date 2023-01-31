@@ -4,7 +4,7 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils features for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -27,6 +27,7 @@
     "widget test",
 		"testing"
   ],
+  "icon": "assets/icon.png",
   "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:dart",
