@@ -1,3 +1,4 @@
+import { ConfigurationUtils } from './configuration-utils';
 import { getRelativeTestFolder } from "./utils";
 
 const fs = require('fs');
@@ -19,9 +20,10 @@ export function getFilesInDir(dir: String, findFiles?: String[]) {
 }
 
 export function findClosestTestFiles(fileName: String) {
+    const minPercent = ConfigurationUtils.getMinPercentageForCloseFile();
     const testFiles = getFilesInDir(getRelativeTestFolder());
 
     const matches = stringSimilarity.findBestMatch(fileName, testFiles);
 
-    return matches.ratings.filter((match: any) => match.rating >= 0.80).sort((a: any, b: any) => b.rating - a.rating);
+    return matches.ratings.filter((match: any) => match.rating >= minPercent).sort((a: any, b: any) => b.rating - a.rating);
 }
