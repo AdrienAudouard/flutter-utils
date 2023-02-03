@@ -36,10 +36,25 @@ function getTestFolder() {
     return '/test' + subFolderPath;
 }
 
-export function openDocumentInEditor(filePath: string) {
+export function openDocumentInEditor(filePath: string, line?: number) {
     var openPath = vscode.Uri.parse("file://" + filePath);
     vscode.workspace.openTextDocument(openPath).then(doc => {
-        vscode.window.showTextDocument(doc);
+        vscode.window.showTextDocument(doc).then(() => {
+            if (!line) {
+                return;
+            }
+            /// Set the scroll and the cursor to the position we want
+            const editor = vscode.window.activeTextEditor;
+            const newPosition = new vscode.Position(line, 0);
+            const newSelection = new vscode.Selection(newPosition, newPosition);
+            editor!.selection = newSelection;
+
+            const lineToGo = Math.max(0, line - 10);
+            const scrollPosition = new vscode.Position(lineToGo, 0);
+            const range = new vscode.Range(scrollPosition, scrollPosition);
+
+            editor?.revealRange(range);
+        });
     });
 }
 

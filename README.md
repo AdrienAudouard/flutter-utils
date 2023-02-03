@@ -19,7 +19,17 @@ The features are :
 
 | Settings | Description |
 | --- | ----------- |
-| flutter-utils.testFileFolder | Folder under /test where your tests are located|
-| flutter-utils.closestFileMinPercentage | When the test file is not found, the extension will made some suggestions by searching the closest search test files with a score above this settings (0.8 by default) |
-| flutter-utils.codeLens.enabled | Enable or not the code lens feature |
-| flutter-utils.codeLens.testFunctions | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)
+| `flutter-utils.testFileFolder` | Folder under `/test` where your tests are located|
+| `flutter-utils.closestFileMinPercentage` | When the test file is not found, the extension will made some suggestions by searching the closest search test files with a score above this settings (0.8 by default) |
+| `flutter-utils.codeLens.enabled` | Enable or not the code lens feature |
+| `flutter-utils.codeLens.testFunctions` | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)
+
+## Next features
+
+- [ ]  Rename test file when source is renamed
+- [ ]  Move test file when the source file is moved
+- [ ]  Handle class & method renaming
+- [ ]  Propose a test file rename if a source file is close
+- [ ]  View source from test editor
+- [ ]  Create function test group if it do not exists
+- [x]  Open test files on the correct line

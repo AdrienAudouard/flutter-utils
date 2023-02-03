@@ -6,7 +6,7 @@ import { getAbsolutePath, getRelativePath, getRelativeTestPath } from "./utils";
 const fs = require('fs');
 
 export class CodeLensUtils {
-    public static async updateCodeLens(lens: ClassDataCodeLens) {
+    public static async updateCodeLens(lens: ClassDataCodeLens): Promise<vscode.CodeLens> {
         const fileRelativePath = getRelativePath(lens.documentPath.path);
         const testPath = getRelativeTestPath(fileRelativePath);
         const testPathAbsolute = getAbsolutePath(testPath);
@@ -14,12 +14,14 @@ export class CodeLensUtils {
         const exist = fs.existsSync(testPathAbsolute);
 
         let matches = 0;
+        let line = 0;
         if (exist) {
             try {
                 const symbols = await vscode.commands.executeCommand<vscode.DocumentSymbol[]>("vscode.executeDocumentSymbolProvider", vscode.Uri.parse(testPathAbsolute));
                 const parentSymbol = SymbolUtils.getTestParentSymbol(symbols, lens.className!);
                 if (parentSymbol) {
                     matches = SymbolUtils.getNumberOfTests(parentSymbol);
+                    line = parentSymbol.range.start.line;
                 }
             } catch (e) {
                 console.log(e);
@@ -27,6 +29,6 @@ export class CodeLensUtils {
         }
 
         const label = exist ? matches + ' tests' : 'Create a test file';
-        return { ...lens, command: { title: label, command: 'flutter-utils.goTestFile' } };
+        return { ...lens, command: { title: label, command: 'flutter-utils.goTestFile', arguments: [line] } };
     }
 }

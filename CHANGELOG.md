@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.2.2] - 2023-02-03
+
+### Added
+
+- When you click on the code lens of a function or of a class it open the file where the tests are
 ## [1.2.1] - 2023-01-31
 
 ### Added

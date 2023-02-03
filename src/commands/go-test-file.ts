@@ -7,7 +7,7 @@ import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnipp
 const createLabel = 'Create test file';
 const cancelLabel = 'Cancel';
 
-export async function goTestFile() {
+export async function goTestFile(line?: number) {
     const editor = vscode.window.activeTextEditor;
 
     if (!editor) {
@@ -55,12 +55,12 @@ export async function goTestFile() {
 
             vscode.window.showInformationMessage('Test file created');
 
-            openDocumentInEditor(testPathAbsolute);
+            openDocumentInEditor(testPathAbsolute, line);
         } else {
             const selectionPath = selection.split('-')[0].trim();
-            openDocumentInEditor(getAbsolutePath(selectionPath));
+            openDocumentInEditor(getAbsolutePath(selectionPath), line);
         }
     } else {
-        openDocumentInEditor(testPathAbsolute);
+        openDocumentInEditor(testPathAbsolute, line);
     }
 }
