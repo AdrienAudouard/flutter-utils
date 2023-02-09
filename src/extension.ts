@@ -16,30 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 		context.subscriptions.push(vscode.languages.registerCodeLensProvider({ scheme: 'file', language: 'dart' }, new TestLensProvider(),));
 	}
 
-	vscode.workspace.onWillSaveTextDocument(() => {
-		const range = new vscode.Range(
-			new vscode.Position(0, 0),
-			new vscode.Position(0, 80)
-		);
-
-		const decorationType = vscode.window.createTextEditorDecorationType({
-		});
-
-		let hoverMessage = new vscode.MarkdownString();
-		hoverMessage.appendMarkdown('[link](command:flutter-utils.goTestFile)');
-		hoverMessage.isTrusted = true;
-
-		const hover = {
-			range,
-			hoverMessage: hoverMessage,
-			renderOptions: {
-				after: {},
-			}
-		} as vscode.DecorationOptions;
-
-		vscode.window.activeTextEditor?.setDecorations(decorationType, [hover]);
-	});
-
 	context.subscriptions.push(testFileCommand);
 	context.subscriptions.push(sourceFileCommand);
 }
