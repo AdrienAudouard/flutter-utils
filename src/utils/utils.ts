@@ -60,7 +60,7 @@ export function openDocumentInEditor(filePath: string, line?: number) {
 
 export function getTestFileSnippet(): string {
 
-    return `import 'package:test/test.dart'; 
+    return `import 'package:flutter_test/flutter_test.dart';
 
 void main() {
 	group(

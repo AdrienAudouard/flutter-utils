@@ -15,6 +15,19 @@ The features are :
 | Open test file | Open the test file related to the source file opened. Ask to create one if it do not exists|
 | Open source file | Open the source file related to the test file opened |
 
+## Demo 
+
+### Create a test file
+![rename](https://raw.githubusercontent.com/AdrienAudouard/flutter-utils/main/readme-images/create_test_file.gif)
+
+### Open test file
+![go](https://raw.githubusercontent.com/AdrienAudouard/flutter-utils/main/readme-images/go.gif)
+
+## How it works
+
+To be detected, your test files must be placed inside the `test` folder with the same folder structure as the source files.
+For example, the test file of `lib/folder_a/todo.dart` must be `test/folder_a/todo_test.dart`.
+
 ## Settings
 
 | Settings | Description |
