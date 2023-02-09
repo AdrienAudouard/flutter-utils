@@ -6,14 +6,7 @@ The features are :
 - 🚀 Open the test file related to the source code opened
 - 🚀 Create a test file directly with a button
 - 🚀 If you made a type when creating a test file, the plugin will made some suggestions, it will find the closests test file related to your source file
-- 🚀 View the number of tests for your classes or functions directly in the editor
-
-## Features
-
-| Command | Description |
-| --- | ----------- |
-| Open test file | Open the test file related to the source file opened. Ask to create one if it do not exists|
-| Open source file | Open the source file related to the test file opened |
+- 🚀 View the number of tests for your classes and functions directly in the editor
 
 ## Demo 
 
@@ -22,6 +15,13 @@ The features are :
 
 ### Open test file
 ![go](https://raw.githubusercontent.com/AdrienAudouard/flutter-utils/main/readme-images/go.gif)
+
+## Features
+
+| Command | Description |
+| --- | ----------- |
+| Open test file | Open the test file related to the source file opened. Ask to create one if it do not exists|
+| Open source file | Open the source file related to the test file opened |
 
 ## How it works
 
