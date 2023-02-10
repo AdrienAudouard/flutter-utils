@@ -23,6 +23,11 @@ export async function functiononEditorChanged(event: TextEditor | undefined) {
     const testPath = getRelativeTestPath(fileRelativePath);
     const testPathAbsolute = getAbsolutePath(testPath);
     const closest = findClosestTestFiles(testPathAbsolute);
+
+    if (closest.length === 0) {
+        return;
+    }
+
     const paths = closest.map((el) => ({ title: el.target.split('/').reverse()[0], path: el.target })).slice(0, 3);
 
     const response = await window.showInformationMessage("Test files that might contain tests for this file, do you want to rename one?", ...paths);
