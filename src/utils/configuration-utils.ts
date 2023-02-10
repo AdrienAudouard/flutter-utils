@@ -9,6 +9,10 @@ export class ConfigurationUtils {
         return this.getConfigurationValue<boolean>('flutter-utils.codeLens', 'enabled') ?? false;
     }
 
+    public static isRenameSuggestionEnabled(): boolean {
+        return this.getConfigurationValue<boolean>('flutter-utils.suggestions', 'renameTestFile') ?? false;
+    }
+
     public static getTestFunctionsName(): string[] {
         return this.getConfigurationValue<string[]>('flutter-utils.codeLens', 'testFunctions') ?? [];
     }

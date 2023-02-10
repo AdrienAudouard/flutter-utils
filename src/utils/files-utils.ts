@@ -19,9 +19,9 @@ export function getFilesInDir(dir: String, findFiles?: String[]) {
     return files_;
 }
 
-export function findClosestTestFiles(fileName: String) {
+export function findClosestTestFiles(fileName: String): { target: string, rating: number }[] {
     const minPercent = ConfigurationUtils.getMinPercentageForCloseFile();
-    const testFiles = getFilesInDir(getRelativeTestFolder());
+    const testFiles = getFilesInDir(getRelativeTestFolder()).filter((file) => file.endsWith('_test.dart'));
 
     const matches = stringSimilarity.findBestMatch(fileName, testFiles);
 

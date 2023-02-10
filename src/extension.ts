@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { goSourceFile } from './commands/go-source-file';
 import { goTestFile } from './commands/go-test-file';
+import { functiononEditorChanged } from './event_handler/on-active-editor-change.handler';
 import { TestLensProvider } from './providers/test-lens-provider';
 import { ConfigurationUtils } from './utils/configuration-utils';
 
@@ -14,6 +15,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	if (ConfigurationUtils.isCodeLensEnabled()) {
 		context.subscriptions.push(vscode.languages.registerCodeLensProvider({ scheme: 'file', language: 'dart' }, new TestLensProvider(),));
+	}
+
+	if (ConfigurationUtils.isRenameSuggestionEnabled()) {
+		context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(functiononEditorChanged));
 	}
 
 	context.subscriptions.push(testFileCommand);

@@ -34,6 +34,7 @@ For example, the test file of `lib/folder_a/todo.dart` must be `test/folder_a/to
 | --- | ----------- |
 | `flutter-utils.testFileFolder` | Folder under `/test` where your tests are located|
 | `flutter-utils.closestFileMinPercentage` | When the test file is not found, the extension will made some suggestions by searching the closest search test files with a score above this settings (0.8 by default) |
+|`flutter-utils.suggestions.renameTestFile`| Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name.|
 | `flutter-utils.codeLens.enabled` | Enable or not the code lens feature |
 | `flutter-utils.codeLens.testFunctions` | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)
 

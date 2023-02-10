@@ -1,8 +1,17 @@
+import * as fs from 'fs';
 import * as vscode from 'vscode';
 
 export function getAbsolutePath(path: String) {
     const workspacePath = vscode.workspace.workspaceFolders![0].uri.path;
     return workspacePath + path;
+}
+
+export function isTestFileExisting(path: string): boolean {
+    const fileRelativePath = getRelativePath(path);
+    const testPath = getRelativeTestPath(fileRelativePath);
+    const testPathAbsolute = getAbsolutePath(testPath);
+
+    return fs.existsSync(testPathAbsolute);
 }
 
 export function getRelativeTestPath(path: string) {

@@ -82,6 +82,11 @@
           "default": "0.80",
           "description": "When the test file is not found, the extension will made some suggestion by searching the closest search test file with a score above this settings (0.8 by default and must be between 0 and 1)"
         },
+        "flutter-utils.suggestions.renameTestFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name."
+        },
         "flutter-utils.codeLens.enabled": {
           "type": "boolean",
           "default": true,

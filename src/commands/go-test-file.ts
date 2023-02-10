@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as p from 'path';
 import * as vscode from 'vscode';
 import { findClosestTestFiles } from '../utils/files-utils';
-import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnippet, openDocumentInEditor } from '../utils/utils';
+import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnippet, isTestFileExisting, openDocumentInEditor } from '../utils/utils';
 
 const createLabel = 'Create test file';
 const cancelLabel = 'Cancel';
@@ -33,7 +33,7 @@ export async function goTestFile(line?: number) {
     const testPath = getRelativeTestPath(fileRelativePath);
     const testPathAbsolute = getAbsolutePath(testPath);
 
-    const exist = fs.existsSync(testPathAbsolute);
+    const exist = isTestFileExisting(filePath);
 
     if (!exist) {
         const closest = findClosestTestFiles(testPathAbsolute);
@@ -44,7 +44,7 @@ export async function goTestFile(line?: number) {
 
         const selection = await vscode.window.showQuickPick(options, { "title": "Test file do not exists. Do you want to create it?" });
 
-        if (selection === cancelLabel || !options.includes(selection)) {
+        if (selection === cancelLabel || !options.includes(selection ?? '')) {
             return;
         }
 
@@ -57,7 +57,7 @@ export async function goTestFile(line?: number) {
 
             openDocumentInEditor(testPathAbsolute, line);
         } else {
-            const selectionPath = selection.split('-')[0].trim();
+            const selectionPath = selection!.split('-')[0].trim();
             openDocumentInEditor(getAbsolutePath(selectionPath), line);
         }
     } else {
