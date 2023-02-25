@@ -1,6 +1,6 @@
 import { TextEditor, Uri, window, workspace } from "vscode";
 import { findClosestTestFiles } from "../utils/files-utils";
-import { getAbsolutePath, getRelativePath, getRelativeTestPath, isTestFileExisting, openDocumentInEditor } from "../utils/utils";
+import { getAbsoluteLibRootFolder, getAbsoluteTestFile, getRelativePath, isTestFileExisting, openDocumentInEditor } from "../utils/utils";
 
 export async function functiononEditorChanged(event: TextEditor | undefined) {
     if (!event) {
@@ -19,10 +19,9 @@ export async function functiononEditorChanged(event: TextEditor | undefined) {
         return;
     }
 
-    const fileRelativePath = getRelativePath(path);
-    const testPath = getRelativeTestPath(fileRelativePath);
-    const testPathAbsolute = getAbsolutePath(testPath);
-    const closest = findClosestTestFiles(testPathAbsolute);
+    const testPathAbsolute = getAbsoluteTestFile(path);
+    const libRootFolder = getAbsoluteLibRootFolder(path);
+    const closest = findClosestTestFiles(testPathAbsolute, libRootFolder);
 
     if (closest.length === 0) {
         return;
@@ -36,7 +35,7 @@ export async function functiononEditorChanged(event: TextEditor | undefined) {
         return;
     }
 
-    const message = `Are you sure you want to rename ${getRelativePath(response.path)} to ${testPath}`;
+    const message = `Are you sure you want to rename ${getRelativePath(response.path)} to ${testPathAbsolute}`;
     const yesNoResponse = await window.showInformationMessage(message, "Yes", "No");
 
     if (yesNoResponse !== "Yes") {

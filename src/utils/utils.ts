@@ -7,9 +7,7 @@ export function getAbsolutePath(path: String) {
 }
 
 export function isTestFileExisting(path: string): boolean {
-    const fileRelativePath = getRelativePath(path);
-    const testPath = getRelativeTestPath(fileRelativePath);
-    const testPathAbsolute = getAbsolutePath(testPath);
+    const testPathAbsolute = getAbsoluteTestFile(path);
 
     return fs.existsSync(testPathAbsolute);
 }
@@ -20,7 +18,7 @@ export function getRelativeTestPath(path: string) {
     return path.replace('/lib', testFolder).replace('.dart', '_test.dart');
 }
 
-export function getRelativeSourcePath(path: string) {
+export function getSourcePath(path: string) {
     const testFolder = getTestFolder();
 
     return path.replace(testFolder, '/lib/',).replace('_test.dart', '.dart');
@@ -36,6 +34,53 @@ export function getRelativeTestFolder() {
     const testFolder = getTestFolder();
 
     return workspacePath + testFolder;
+}
+
+export function getAbsoluteTestFile(filePath: string): string {
+    const testFolder = getAbsoluteTestFolderForFile(filePath);
+    const rootFolder = testFolder.replace(getTestFolder(), '');
+    const fileRelative = filePath.replace(rootFolder, '').replace('/lib', '');
+    return (testFolder + fileRelative).replace('//', '/').replace('.dart', '_test.dart');
+}
+
+// Search the nearest test folder of the given test file
+export function getAbsoluteTestFolderForFile(testFile: string): string {
+    const root = getAbsoluteLibRootFolder(testFile);
+
+    return root + getTestFolder();
+}
+
+export function getAbsoluteLibRootFolder(filePath: string): string {
+    const workspacePath = vscode.workspace.workspaceFolders![0].uri.path;
+
+    let parent = getParentPath(filePath);
+    let findTestFolder = false;
+    do {
+        const files = fs.readdirSync(parent);
+        const containsTestFolder = files.find(isPackageRootDir);
+
+        if (containsTestFolder) {
+            findTestFolder = true;
+        } else {
+            parent = getParentPath(parent);
+        }
+
+    } while(parent.length !== 0 && parent !== workspacePath && !findTestFolder);
+
+    return parent;
+}
+
+export function isPackageRootDir(path: string): boolean {
+    return path.endsWith('pubspec.yaml');
+}
+
+// Return the path of the parent folder.
+// For example, for a file with a path "/parent/file.js" it will return "/parent"
+export function getParentPath(file: String): string {
+    const fileParts = file.split('/');
+    fileParts.pop();
+
+    return fileParts.join('/').replace('//', '/');
 }
 
 function getTestFolder() {
