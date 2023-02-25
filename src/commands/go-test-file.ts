@@ -1,13 +1,14 @@
 import * as fs from 'fs';
 import * as p from 'path';
 import * as vscode from 'vscode';
+import { analyticsService } from '../services/analytics.service';
 import { findClosestTestFiles } from '../utils/files-utils';
-import { getAbsolutePath, getRelativePath, getRelativeTestPath, getTestFileSnippet, isTestFileExisting, openDocumentInEditor } from '../utils/utils';
+import { getAbsoluteLibRootFolder, getAbsolutePath, getAbsoluteTestFile, getRelativePath, getTestFileSnippet, isTestFileExisting, openDocumentInEditor } from '../utils/utils';
 
 const createLabel = 'Create test file';
 const cancelLabel = 'Cancel';
 
-export async function goTestFile(line?: number) {
+export async function goTestFile(line?: number, source?: string) {
     const editor = vscode.window.activeTextEditor;
 
     if (!editor) {
@@ -29,14 +30,12 @@ export async function goTestFile(line?: number) {
         return;
     }
 
-    const fileRelativePath = getRelativePath(filePath);
-    const testPath = getRelativeTestPath(fileRelativePath);
-    const testPathAbsolute = getAbsolutePath(testPath);
-
+    const testPathAbsolute = getAbsoluteTestFile(filePath);
     const exist = isTestFileExisting(filePath);
 
     if (!exist) {
-        const closest = findClosestTestFiles(testPathAbsolute);
+        const libRootFolder = getAbsoluteLibRootFolder(filePath);
+        const closest = findClosestTestFiles(testPathAbsolute, libRootFolder);
         const options = [createLabel, cancelLabel, ...closest.map((file: { target: String, rating: number }) => {
             const percent = (file.rating * 100).toFixed(2);
             return getRelativePath(file.target) + ' - ' + percent + ' %';
@@ -45,6 +44,7 @@ export async function goTestFile(line?: number) {
         const selection = await vscode.window.showQuickPick(options, { "title": "Test file do not exists. Do you want to create it?" });
 
         if (selection === cancelLabel || !options.includes(selection ?? '')) {
+            analyticsService.tagEvent('open-test-file-cancel', {source: source ?? 'command'});
             return;
         }
 
@@ -55,12 +55,20 @@ export async function goTestFile(line?: number) {
 
             vscode.window.showInformationMessage('Test file created');
 
+            analyticsService.tagEvent('create-test-file', {source: source ?? 'command'});
+            tagOpenTestFile(source);
             openDocumentInEditor(testPathAbsolute, line);
         } else {
             const selectionPath = selection!.split('-')[0].trim();
+            tagOpenTestFile(source);
             openDocumentInEditor(getAbsolutePath(selectionPath), line);
         }
     } else {
+        tagOpenTestFile(source);
         openDocumentInEditor(testPathAbsolute, line);
     }
+}
+
+function tagOpenTestFile(source?: string) {
+    analyticsService.tagEvent('open-test-file', {source: source ?? 'command'});
 }

@@ -1,5 +1,4 @@
 import { ConfigurationUtils } from './configuration-utils';
-import { getRelativeTestFolder } from "./utils";
 
 const fs = require('fs');
 const stringSimilarity = require("string-similarity");
@@ -19,9 +18,9 @@ export function getFilesInDir(dir: String, findFiles?: String[]) {
     return files_;
 }
 
-export function findClosestTestFiles(fileName: String): { target: string, rating: number }[] {
+export function findClosestTestFiles(fileName: string, rootPath: string): { target: string, rating: number }[] {
     const minPercent = ConfigurationUtils.getMinPercentageForCloseFile();
-    const testFiles = getFilesInDir(getRelativeTestFolder()).filter((file) => file.endsWith('_test.dart'));
+    const testFiles = getFilesInDir(rootPath).filter((file) => file.endsWith('_test.dart'));
 
     const matches = stringSimilarity.findBestMatch(fileName, testFiles);
 

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as vscode from 'vscode';
-import { getAbsolutePath, getRelativePath, getRelativeSourcePath, openDocumentInEditor } from '../utils/utils';
+import { analyticsService } from '../services/analytics.service';
+import { getSourcePath, openDocumentInEditor } from '../utils/utils';
 
 export async function goSourceFile() {
     const editor = vscode.window.activeTextEditor;
@@ -24,16 +25,15 @@ export async function goSourceFile() {
         return;
     }
 
-    const fileRelativePath = getRelativePath(filePath);
-    const sourcePath = getRelativeSourcePath(fileRelativePath);
-    const sourceAbsolutePath = getAbsolutePath(sourcePath);
+    const sourcePath = getSourcePath(filePath);
 
-    const exist = fs.existsSync(sourceAbsolutePath);
+    const exist = fs.existsSync(sourcePath);
 
     if (!exist) {
-        vscode.window.showInformationMessage('Source file ' + sourceAbsolutePath + ' do not exists');
+        vscode.window.showInformationMessage('Source file ' + sourcePath + ' do not exists');
         return;
     }
 
-    openDocumentInEditor(sourceAbsolutePath);
+    analyticsService.tagEvent('open-source-file', {source: 'command'});
+    openDocumentInEditor(sourcePath);
 }
