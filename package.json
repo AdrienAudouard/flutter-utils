@@ -143,6 +143,7 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
+    "@opentelemetry/instrumentation": "^0.35.1",
     "@vscode/extension-telemetry": "^0.7.5",
     "sinon": "^15.0.1",
     "string-similarity": "^4.0.4"
