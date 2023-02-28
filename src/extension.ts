@@ -4,24 +4,50 @@ import { goTestFile } from './commands/go-test-file';
 import { functiononEditorChanged } from './event_handler/on-active-editor-change.handler';
 import { TestLensProvider } from './providers/test-lens-provider';
 import { analyticsService } from './services/analytics.service';
+import { UserService } from './services/user.service';
 import { ConfigurationUtils } from './utils/configuration-utils';
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(analyticsService.init());
-	let testFileCommand = vscode.commands.registerCommand('flutter-utils.goTestFile', goTestFile);
-	let sourceFileCommand = vscode.commands.registerCommand('flutter-utils.goSourceFile', goSourceFile);
+  context.subscriptions.push(
+    analyticsService.init(UserService.getUserId(context)),
+  );
 
-	if (ConfigurationUtils.isCodeLensEnabled()) {
-		context.subscriptions.push(vscode.languages.registerCodeLensProvider({ scheme: 'file', language: 'dart' }, new TestLensProvider(),));
-	}
+  let testFileCommand = vscode.commands.registerCommand(
+    'flutter-utils.goTestFile',
+    goTestFile,
+  );
+  let sourceFileCommand = vscode.commands.registerCommand(
+    'flutter-utils.goSourceFile',
+    goSourceFile,
+  );
 
-	if (ConfigurationUtils.isRenameSuggestionEnabled()) {
-		context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(functiononEditorChanged));
-	}
+  if (ConfigurationUtils.isCodeLensEnabled()) {
+    context.subscriptions.push(
+      vscode.languages.registerCodeLensProvider(
+        { scheme: 'file', language: 'dart' },
+        new TestLensProvider(),
+      ),
+    );
+  }
 
-	context.subscriptions.push(testFileCommand);
-	context.subscriptions.push(sourceFileCommand);
+  if (ConfigurationUtils.isRenameSuggestionEnabled()) {
+    context.subscriptions.push(
+      vscode.window.onDidChangeActiveTextEditor(functiononEditorChanged),
+    );
+  }
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration((event) => {
+      analyticsService.updateUserProperties();
+      analyticsService.trackUpdatedProperties(event);
+    }),
+  );
+
+  context.subscriptions.push(testFileCommand);
+  context.subscriptions.push(sourceFileCommand);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {
+  analyticsService.endSession();
+}
