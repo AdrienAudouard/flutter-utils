@@ -3,7 +3,15 @@ import * as vscode from 'vscode';
 import { analyticsService } from '../services/analytics.service';
 import { getSourcePath, openDocumentInEditor } from '../utils/utils';
 
-export async function goSourceFile() {
+export async function goSourceFileWrapper() {
+  try {
+    goSourceFile();
+  } catch (err) {
+    analyticsService.trackError(err);
+  }
+}
+
+function goSourceFile() {
   const editor = vscode.window.activeTextEditor;
 
   if (!editor) {

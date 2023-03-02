@@ -12,7 +12,7 @@ export class UserService {
     const id = uuidv4();
     context.globalState.update(this.userIdKey, id);
 
-    return '';
+    return id;
   }
 
   static getAppVersion(): string {

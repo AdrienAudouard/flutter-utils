@@ -71,6 +71,10 @@ class AnalyticsService {
       duration: duration.toString(),
     });
   }
+
+  trackError(err: any) {
+    this.reporter?.sendTelemetryException(err);
+  }
 }
 
 export const analyticsService = new AnalyticsService();

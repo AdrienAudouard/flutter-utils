@@ -1,48 +1,81 @@
-import { TextEditor, Uri, window, workspace } from "vscode";
-import { findClosestTestFiles } from "../utils/files-utils";
-import { getAbsoluteLibRootFolder, getAbsoluteTestFile, getRelativePath, isTestFileExisting, openDocumentInEditor } from "../utils/utils";
+import { TextEditor, Uri, window, workspace } from 'vscode';
+import { analyticsService } from '../services/analytics.service';
+import { findClosestTestFiles } from '../utils/files-utils';
+import {
+  getAbsoluteLibRootFolder,
+  getAbsoluteTestFile,
+  getRelativePath,
+  isTestFileExisting,
+  openDocumentInEditor,
+} from '../utils/utils';
 
-export async function functiononEditorChanged(event: TextEditor | undefined) {
-    if (!event) {
-        return;
-    }
+export async function onEditorChangedWrapper(event: TextEditor | undefined) {
+  try {
+    await onEditorChanged(event);
+  } catch (err) {
+    analyticsService.trackError(err);
+  }
+}
 
-    const path = event.document.uri.path;
+async function onEditorChanged(event: TextEditor | undefined) {
+  if (!event) {
+    return;
+  }
 
-    if (path.endsWith('_test.dart')) {
-        return;
-    }
+  const path = event.document.uri.path;
 
-    const testFileExisting = isTestFileExisting(path);
+  if (path.endsWith('_test.dart')) {
+    return;
+  }
 
-    if (testFileExisting) {
-        return;
-    }
+  const testFileExisting = isTestFileExisting(path);
 
-    const testPathAbsolute = getAbsoluteTestFile(path);
-    const libRootFolder = getAbsoluteLibRootFolder(path);
-    const closest = findClosestTestFiles(testPathAbsolute, libRootFolder);
+  if (testFileExisting) {
+    return;
+  }
 
-    if (closest.length === 0) {
-        return;
-    }
+  const testPathAbsolute = getAbsoluteTestFile(path);
+  const libRootFolder = getAbsoluteLibRootFolder(path);
+  const closest = findClosestTestFiles(testPathAbsolute, libRootFolder);
 
-    const paths = closest.map((el) => ({ title: el.target.split('/').reverse()[0], path: el.target })).slice(0, 3);
+  if (closest.length === 0) {
+    return;
+  }
 
-    const response = await window.showInformationMessage("Test files that might contain tests for this file, do you want to rename one?", ...paths);
+  const paths = closest
+    .map((el) => ({
+      title: el.target.split('/').reverse()[0],
+      path: el.target,
+    }))
+    .slice(0, 3);
 
-    if (!response || !paths.includes(response)) {
-        return;
-    }
+  const response = await window.showInformationMessage(
+    'Test files that might contain tests for this file, do you want to rename one?',
+    ...paths,
+  );
 
-    const message = `Are you sure you want to rename ${getRelativePath(response.path)} to ${testPathAbsolute}`;
-    const yesNoResponse = await window.showInformationMessage(message, "Yes", "No");
+  if (!response || !paths.includes(response)) {
+    return;
+  }
 
-    if (yesNoResponse !== "Yes") {
-        return;
-    }
+  const message = `Are you sure you want to rename ${getRelativePath(
+    response.path,
+  )} to ${testPathAbsolute}`;
+  const yesNoResponse = await window.showInformationMessage(
+    message,
+    'Yes',
+    'No',
+  );
 
-    await workspace.fs.rename(Uri.parse(response.path), Uri.parse(testPathAbsolute));
+  if (yesNoResponse !== 'Yes') {
+    return;
+  }
 
-    openDocumentInEditor(testPathAbsolute);
+  await workspace.fs.rename(
+    Uri.parse(response.path),
+    Uri.parse(testPathAbsolute),
+  );
+  analyticsService.tagEvent('rename-test-file');
+
+  openDocumentInEditor(testPathAbsolute);
 }

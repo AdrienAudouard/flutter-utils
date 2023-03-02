@@ -1,24 +1,32 @@
 import * as vscode from 'vscode';
-import { goSourceFile } from './commands/go-source-file';
-import { goTestFile } from './commands/go-test-file';
-import { functiononEditorChanged } from './event_handler/on-active-editor-change.handler';
+import { goSourceFileWrapper } from './commands/go-source-file';
+import { goTestFileWrapper } from './commands/go-test-file';
+import { onEditorChangedWrapper } from './event_handler/on-active-editor-change.handler';
 import { TestLensProvider } from './providers/test-lens-provider';
 import { analyticsService } from './services/analytics.service';
 import { UserService } from './services/user.service';
 import { ConfigurationUtils } from './utils/configuration-utils';
 
 export function activate(context: vscode.ExtensionContext) {
+  try {
+    activeExtension(context);
+  } catch (err) {
+    analyticsService.trackError(err);
+  }
+}
+
+function activeExtension(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     analyticsService.init(UserService.getUserId(context)),
   );
 
   let testFileCommand = vscode.commands.registerCommand(
     'flutter-utils.goTestFile',
-    goTestFile,
+    goTestFileWrapper,
   );
   let sourceFileCommand = vscode.commands.registerCommand(
     'flutter-utils.goSourceFile',
-    goSourceFile,
+    goSourceFileWrapper,
   );
 
   if (ConfigurationUtils.isCodeLensEnabled()) {
@@ -32,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   if (ConfigurationUtils.isRenameSuggestionEnabled()) {
     context.subscriptions.push(
-      vscode.window.onDidChangeActiveTextEditor(functiononEditorChanged),
+      vscode.window.onDidChangeActiveTextEditor(onEditorChangedWrapper),
     );
   }
 

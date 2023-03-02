@@ -4,7 +4,7 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils features for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "engines": {
     "vscode": "^1.52.0"
   },

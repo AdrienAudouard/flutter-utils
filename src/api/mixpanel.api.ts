@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { analyticsService } from '../services/analytics.service';
 import { UserService } from '../services/user.service';
 import { mixpanelToken } from '../utils/analytics-key';
 
@@ -34,7 +35,7 @@ export class MixpanelApi {
     fetch(`${this.apiBaseUrl}/track`, options)
       .then((response) => response.json())
       .then((response) => console.log(response))
-      .catch((err) => console.error(err));
+      .catch((err) => analyticsService.trackError(err));
   }
 
   setUserProperties(properties: { [key: string]: string }) {
@@ -52,6 +53,6 @@ export class MixpanelApi {
     fetch(`${this.apiBaseUrl}/engage#profile-set`, options)
       .then((response) => response.json())
       .then((response) => console.log(response))
-      .catch((err) => console.error(err));
+      .catch((err) => analyticsService.trackError(err));
   }
 }
