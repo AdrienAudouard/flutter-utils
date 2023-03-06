@@ -7,8 +7,9 @@ The features are :
 - 🚀 Open the test file related to the source code opened
 - 🚀 Create a test file directly with a button
 - 🚀 Support mono repo and multi packages repo
-- 🚀 If you made a type when creating a test file, the plugin will made some suggestions, it will find the closests test file related to your source file
+- 🚀 If you made a typo when creating a test file, the plugin will made some suggestions, it will find the closests test file related to your source file
 - 🚀 View the number of tests for your classes and functions directly in the editor
+- 🚀 Synchronise test files with source files. Automatically rename and move test files when the source changes
 
 ## Demo
 
@@ -41,13 +42,14 @@ For example, the test file of `lib/folder_a/todo.dart` must be `test/folder_a/to
 | `flutter-utils.suggestions.renameTestFile` | Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name. |
 | `flutter-utils.codeLens.enabled`           | Enable or not the code lens feature                                                                                                                                                                              |
 | `flutter-utils.codeLens.testFunctions`     | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)                                                                                                       |
+| `flutter-utils.synchronisation.onRename`   | Synchronise the test files with the source files. When a source file is moved or renamed the test file will be renamed and moved to follow the same folder structure and name.                                   |
 
 ## Next features
 
-- [ ] Rename test file when source is renamed
-- [ ] Move test file when the source file is moved
+- [x] Rename test file when source is renamed
+- [x] Move test file when the source file is moved
 - [ ] Handle class & method renaming
-- [ ] Propose a test file rename if a source file is close
+- [x] Propose a test file rename if a source file is close
 - [ ] View source from test editor
 - [ ] Create function test group if it do not exists
 - [x] Open test files on the correct line

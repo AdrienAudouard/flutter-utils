@@ -4,7 +4,7 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils features for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -103,6 +103,16 @@
             "testWidgets"
           ],
           "description": "Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)"
+        },
+        "flutter-utils.synchronisation.onRename": {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Ask",
+            "Never"
+          ],
+          "default": "Ask",
+          "description": "Synchronise the test files with the source files. When a source file is moved or renamed the test file will be renamed and moved to follow the same folder structure and name."
         }
       }
     }

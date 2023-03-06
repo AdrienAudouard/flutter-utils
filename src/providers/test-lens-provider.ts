@@ -32,6 +32,7 @@ export class TestLensProvider implements vscode.CodeLensProvider {
             [
               vscode.SymbolKind.Class,
               vscode.SymbolKind.Method,
+              vscode.SymbolKind.Namespace,
               vscode.SymbolKind.Function,
             ].includes(symbol.kind)
           ) {

@@ -74,6 +74,7 @@ class AnalyticsService {
 
   trackError(err: any) {
     this.reporter?.sendTelemetryException(err);
+    this.mixpanelApi?.trackEvent('error', err);
   }
 }
 

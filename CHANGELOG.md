@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.0] - 2023-03-06
+
+### Added
+
+- Add test files synchronisation
+
 ## [1.4.0] - 2023-02-25
 
 ### Added
