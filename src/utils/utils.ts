@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/node';
+import { addExtensionMethods } from '@sentry/tracing';
 import * as fs from 'fs';
 import * as vscode from 'vscode';
 
@@ -37,9 +39,13 @@ export function getRelativeTestFolder() {
 }
 
 export function getAbsoluteTestFile(filePath: string): string {
+  addExtensionMethods();
+  const transaction = Sentry.startTransaction({ name: 'get-test-path' });
   const testFolder = getAbsoluteTestFolderForFile(filePath);
   const rootFolder = testFolder.replace(getTestFolder(), '');
   const fileRelative = filePath.replace(rootFolder, '').replace('/lib', '');
+
+  transaction.finish();
   return (testFolder + fileRelative)
     .replace('//', '/')
     .replace('.dart', '_test.dart');

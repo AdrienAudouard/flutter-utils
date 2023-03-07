@@ -4,7 +4,7 @@
   "publisher": "AdrienAudouard",
   "description": "Provide some utils features for flutter projects",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -155,7 +155,9 @@
   },
   "dependencies": {
     "@opentelemetry/instrumentation": "^0.35.1",
-    "@vscode/extension-telemetry": "^0.7.5",
+    "@sentry/node": "^7.41.0",
+    "@sentry/tracing": "^7.41.0",
+    "@sentry/types": "^7.41.0",
     "node-fetch": "^3.3.0",
     "sinon": "^15.0.1",
     "string-similarity": "^4.0.4",

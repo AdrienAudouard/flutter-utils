@@ -1,33 +1,25 @@
-import TelemetryReporter, {
-  TelemetryEventProperties,
-} from '@vscode/extension-telemetry';
+import * as Sentry from '@sentry/node';
 import * as vscode from 'vscode';
 import { MixpanelApi } from '../api/mixpanel.api';
-import { analyticsKey } from '../utils/analytics-key';
 import { ConfigurationUtils } from '../utils/configuration-utils';
 
 class AnalyticsService {
-  reporter: TelemetryReporter | undefined;
   mixpanelApi: MixpanelApi | undefined;
   sessionStartTime: Date | undefined;
 
-  init(userId: string): TelemetryReporter {
-    this.reporter = new TelemetryReporter(analyticsKey);
+  init(userId: string): void {
     this.mixpanelApi = new MixpanelApi(userId);
     this.sessionStartTime = new Date();
 
     this.updateUserProperties();
     this.tagEvent('session_start', {});
-
-    return this.reporter;
   }
 
-  tagEvent(name: string, param?: TelemetryEventProperties) {
+  tagEvent(name: string, param?: { [key: string]: string }) {
     if (!vscode.env.isTelemetryEnabled) {
       return;
     }
 
-    this.reporter?.sendTelemetryEvent(name, param ?? {});
     this.mixpanelApi?.trackEvent(name, param ?? {});
   }
 
@@ -73,7 +65,7 @@ class AnalyticsService {
   }
 
   trackError(err: any) {
-    this.reporter?.sendTelemetryException(err);
+    Sentry.captureException(err);
     this.mixpanelApi?.trackEvent('error', err);
   }
 }
