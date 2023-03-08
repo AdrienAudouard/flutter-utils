@@ -132,7 +132,8 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "publish": "vsce publish"
+    "publish": "vsce publish",
+    "postpublish": "VERSION=`npm pkg get version | sed 's/\"//g'` && sentry-cli releases new $VERSION && sentry-cli releases files $VERSION upload-sourcemaps ./dist"
   },
   "devDependencies": {
     "@types/glob": "^8.0.0",
