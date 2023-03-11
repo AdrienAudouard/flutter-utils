@@ -3,6 +3,8 @@
   "displayName": "Flutter Toolkit",
   "publisher": "AdrienAudouard",
   "description": "Generate toString, equatable, JsonSerializable methods, sync tests folders and many more",
+  "bugs": "https://github.com/AdrienAudouard/flutter-utils/issues",
+  "homepage": "https://github.com/AdrienAudouard/flutter-utils",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
   "version": "2.0.1",
   "engines": {
@@ -141,7 +143,7 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "publish": "vsce publish",
-    "postpublish": "VERSION=`npm pkg get version | sed 's/\"//g'` && sentry-cli releases new $VERSION && sentry-cli releases files $VERSION upload-sourcemaps ./dist"
+    "postpublish": "VERSION=`npm pkg get version | sed 's/\"//g'` && git tag $VERSION && sentry-cli releases new $VERSION && sentry-cli releases files $VERSION upload-sourcemaps ./dist"
   },
   "devDependencies": {
     "@types/glob": "^8.0.0",
