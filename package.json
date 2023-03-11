@@ -1,6 +1,6 @@
 {
   "name": "flutter-utils",
-  "displayName": "Flutter Utility",
+  "displayName": "Flutter Tools",
   "publisher": "AdrienAudouard",
   "description": "Generate toString, equatable, JsonSerializable methods, sync tests folders and many more",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
