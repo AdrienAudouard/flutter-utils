@@ -1,10 +1,10 @@
 {
   "name": "flutter-utils",
-  "displayName": "Flutter Test Utils",
+  "displayName": "Flutter Utility",
   "publisher": "AdrienAudouard",
-  "description": "Provide some utils features for flutter projects",
+  "description": "Generate toString, equatable, JsonSerializable methods, sync tests folders and many more",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -21,6 +21,11 @@
     "dart",
     "clean code",
     "dart",
+    "generate",
+    "copyWith",
+    "equatable",
+    "jsonSerializable",
+    "json",
     "tdd",
     "test driven development",
     "unit tests",
@@ -84,6 +89,11 @@
           "type": "number",
           "default": "0.80",
           "description": "When the test file is not found, the extension will made some suggestion by searching the closest search test file with a score above this settings (0.8 by default and must be between 0 and 1)"
+        },
+        "flutter-utils.quickFixes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable quick fixes (generate equatable and copyWith methods)"
         },
         "flutter-utils.suggestions.renameTestFile": {
           "type": "boolean",

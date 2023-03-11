@@ -1,6 +1,8 @@
 import * as Sentry from '@sentry/node';
 import * as vscode from 'vscode';
+import { activateCodeActionProvider } from './code-actions-provider';
 import { activateCommands } from './commands';
+import { activateCompletionProvider } from './completion-provider';
 import { activateEventHandlers } from './event_handler';
 import { activateProviders } from './providers';
 import { analyticsService } from './services/analytics.service';
@@ -28,6 +30,8 @@ function activeExtension(context: vscode.ExtensionContext) {
   activateCommands(context);
   activateProviders(context);
   activateEventHandlers(context);
+  activateCompletionProvider(context);
+  activateCodeActionProvider(context);
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((event) => {

@@ -8,6 +8,7 @@ export class ConfigurationUtils {
     { scope: 'flutter-utils.suggestions', key: 'renameTestFile' },
     { scope: 'flutter-utils.codeLens', key: 'testFunctions' },
     { scope: 'flutter-utils.synchronisation', key: 'onRename' },
+    { scope: 'flutter-utils', key: 'quickFixes' },
   ];
 
   public static getMinPercentageForCloseFile(): number {
@@ -59,6 +60,10 @@ export class ConfigurationUtils {
         'renameTestFile',
       ) ?? false
     );
+  }
+
+  public static isQuickFixesEnabled(): boolean {
+    return this.getConfigurationValue('flutter-utils', 'quickFixes') ?? false;
   }
 
   public static getTestFunctionsName(): string[] {
