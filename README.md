@@ -37,14 +37,14 @@ For example, the test file of `lib/folder_a/todo.dart` must be `test/folder_a/to
 
 ## Settings
 
-| Settings                                   | Description                                                                                                                                                                                                      |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flutter-utils.testFileFolder`             | Folder under `/test` where your tests are located                                                                                                                                                                |
-| `flutter-utils.closestFileMinPercentage`   | When the test file is not found, the extension will made some suggestions by searching the closest search test files with a score above this settings (0.8 by default)                                           |
-| `flutter-utils.suggestions.renameTestFile` | Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name. |
-| `flutter-utils.codeLens.enabled`           | Enable or not the code lens feature                                                                                                                                                                              |
-| `flutter-utils.codeLens.testFunctions`     | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)                                                                                                       |
-| `flutter-utils.synchronisation.onRename`   | Synchronise the test files with the source files. When a source file is moved or renamed the test file will be renamed and moved to follow the same folder structure and name.                                   |
+| Settings                                     | Description                                                                                                                                                                                                      |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flutter-toolkit.testFileFolder`             | Folder under `/test` where your tests are located                                                                                                                                                                |
+| `flutter-toolkit.closestFileMinPercentage`   | When the test file is not found, the extension will made some suggestions by searching the closest search test files with a score above this settings (0.8 by default)                                           |
+| `flutter-toolkit.suggestions.renameTestFile` | Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name. |
+| `flutter-toolkit.codeLens.enabled`           | Enable or not the code lens feature                                                                                                                                                                              |
+| `flutter-toolkit.codeLens.testFunctions`     | Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)                                                                                                       |
+| `flutter-toolkit.synchronisation.onRename`   | Synchronise the test files with the source files. When a source file is moved or renamed the test file will be renamed and moved to follow the same folder structure and name.                                   |
 
 ## Next features
 

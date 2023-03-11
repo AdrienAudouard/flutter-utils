@@ -3,18 +3,18 @@ import { TestSyncConfigurationValue } from '../event_handler/on-rename-file.hand
 
 export class ConfigurationUtils {
   static properties = [
-    { scope: 'flutter-utils', key: 'closestFileMinPercentage' },
-    { scope: 'flutter-utils.codeLens', key: 'enabled' },
-    { scope: 'flutter-utils.suggestions', key: 'renameTestFile' },
-    { scope: 'flutter-utils.codeLens', key: 'testFunctions' },
-    { scope: 'flutter-utils.synchronisation', key: 'onRename' },
-    { scope: 'flutter-utils', key: 'quickFixes' },
+    { scope: 'flutter-toolkit', key: 'closestFileMinPercentage' },
+    { scope: 'flutter-toolkit.codeLens', key: 'enabled' },
+    { scope: 'flutter-toolkit.suggestions', key: 'renameTestFile' },
+    { scope: 'flutter-toolkit.codeLens', key: 'testFunctions' },
+    { scope: 'flutter-toolkit.synchronisation', key: 'onRename' },
+    { scope: 'flutter-toolkit', key: 'quickFixes' },
   ];
 
   public static getMinPercentageForCloseFile(): number {
     return (
       this.getConfigurationValue<number>(
-        'flutter-utils',
+        'flutter-toolkit',
         'closestFileMinPercentage',
       ) ?? 0.8
     );
@@ -23,7 +23,7 @@ export class ConfigurationUtils {
   public static isCodeLensEnabled(): boolean {
     return (
       this.getConfigurationValue<boolean>(
-        'flutter-utils.codeLens',
+        'flutter-toolkit.codeLens',
         'enabled',
       ) ?? false
     );
@@ -32,7 +32,7 @@ export class ConfigurationUtils {
   public static getTestFileSyncValue(): TestSyncConfigurationValue {
     return (
       this.getConfigurationValue<TestSyncConfigurationValue>(
-        'flutter-utils.synchronisation',
+        'flutter-toolkit.synchronisation',
         'onRename',
       ) ?? TestSyncConfigurationValue.never
     );
@@ -40,7 +40,7 @@ export class ConfigurationUtils {
 
   public static setTestFileSyncToAlways() {
     vscode.workspace
-      .getConfiguration('flutter-utils.synchronisation')
+      .getConfiguration('flutter-toolkit.synchronisation')
       .update('onRename', TestSyncConfigurationValue.always);
   }
 
@@ -56,20 +56,20 @@ export class ConfigurationUtils {
   public static isRenameSuggestionEnabled(): boolean {
     return (
       this.getConfigurationValue<boolean>(
-        'flutter-utils.suggestions',
+        'flutter-toolkit.suggestions',
         'renameTestFile',
       ) ?? false
     );
   }
 
   public static isQuickFixesEnabled(): boolean {
-    return this.getConfigurationValue('flutter-utils', 'quickFixes') ?? false;
+    return this.getConfigurationValue('flutter-toolkit', 'quickFixes') ?? false;
   }
 
   public static getTestFunctionsName(): string[] {
     return (
       this.getConfigurationValue<string[]>(
-        'flutter-utils.codeLens',
+        'flutter-toolkit.codeLens',
         'testFunctions',
       ) ?? []
     );

@@ -92,7 +92,7 @@ export function getParentPath(file: String): string {
 
 function getTestFolder() {
   const subFolder = vscode.workspace
-    .getConfiguration('flutter-utils')
+    .getConfiguration('flutter-toolkit')
     .get('testFileFolder') as string;
   const subFolderPath = subFolder.length >= 0 ? '/' + subFolder : '';
 

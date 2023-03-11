@@ -4,11 +4,11 @@ import { goTestFileWrapper } from './go-test-file';
 
 export function activateCommands(context: vscode.ExtensionContext) {
   let testFileCommand = vscode.commands.registerCommand(
-    'flutter-utils.goTestFile',
+    'flutter-toolkit.goTestFile',
     goTestFileWrapper,
   );
   let sourceFileCommand = vscode.commands.registerCommand(
-    'flutter-utils.goSourceFile',
+    'flutter-toolkit.goSourceFile',
     goSourceFileWrapper,
   );
 

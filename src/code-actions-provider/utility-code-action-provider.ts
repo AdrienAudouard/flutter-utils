@@ -44,13 +44,13 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
         document,
       );
 
-      const actionCopyWith = new UtilityCodeAction(
-        'Generate copyWith',
-        vscode.CodeActionKind.QuickFix,
-        UtilityActionType.generateCopyWith,
-        selectedSymbol,
-        document,
-      );
+      // const actionCopyWith = new UtilityCodeAction(
+      //   'Generate copyWith',
+      //   vscode.CodeActionKind.QuickFix,
+      //   UtilityActionType.generateCopyWith,
+      //   selectedSymbol,
+      //   document,
+      // );
 
       const actionJsonSerializable = new UtilityCodeAction(
         'Implement @JsonSerializable',
@@ -67,12 +67,7 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
         selectedSymbol,
         document,
       );
-      return resolve([
-        actionToString,
-        actionCopyWith,
-        actionEquatable,
-        actionJsonSerializable,
-      ]);
+      return resolve([actionToString, actionEquatable, actionJsonSerializable]);
     });
   }
   resolveCodeAction?(
@@ -100,5 +95,7 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
       default:
         break;
     }
+
+    return codeAction;
   }
 }

@@ -16,7 +16,7 @@ export class UserService {
   }
 
   static getAppVersion(): string {
-    return vscode.extensions.getExtension('AdrienAudouard.flutter-utils')
+    return vscode.extensions.getExtension('AdrienAudouard.flutter-toolkit')
       ?.packageJSON.version;
   }
 }

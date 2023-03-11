@@ -1,10 +1,10 @@
 {
   "name": "flutter-utils",
-  "displayName": "Flutter Tools",
+  "displayName": "Flutter Toolkit",
   "publisher": "AdrienAudouard",
   "description": "Generate toString, equatable, JsonSerializable methods, sync tests folders and many more",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -38,18 +38,16 @@
   "icon": "assets/icon.png",
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onLanguage:dart",
-    "onCommand:flutter-utils.goTestFile",
-    "onCommand:flutter-utils.goSourceFile"
+    "onLanguage:dart"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "flutter-utils.goTestFile",
+        "command": "flutter-toolkit.goTestFile",
         "title": "Open test file"
       },
       {
-        "command": "flutter-utils.goSourceFile",
+        "command": "flutter-toolkit.goSourceFile",
         "title": "Open source file"
       }
     ],
@@ -78,34 +76,34 @@
       ]
     },
     "configuration": {
-      "title": "Flutter utils",
+      "title": "Flutter Toolkit",
       "properties": {
-        "flutter-utils.testFileFolder": {
+        "flutter-toolkit.testFileFolder": {
           "type": "string",
           "default": "",
           "description": "Folder who contains the test inside /test"
         },
-        "flutter-utils.closestFileMinPercentage": {
+        "flutter-toolkit.closestFileMinPercentage": {
           "type": "number",
           "default": "0.80",
           "description": "When the test file is not found, the extension will made some suggestion by searching the closest search test file with a score above this settings (0.8 by default and must be between 0 and 1)"
         },
-        "flutter-utils.quickFixes": {
+        "flutter-toolkit.quickFixes": {
           "type": "boolean",
           "default": true,
           "description": "Enable quick fixes (generate equatable and copyWith methods)"
         },
-        "flutter-utils.suggestions.renameTestFile": {
+        "flutter-toolkit.suggestions.renameTestFile": {
           "type": "boolean",
           "default": true,
           "description": "Enable test file rename suggestion. When no test file are found for the file opened, the extension will try to find test files that might match and will ask you if you want to rename it with the correct name."
         },
-        "flutter-utils.codeLens.enabled": {
+        "flutter-toolkit.codeLens.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable code lens feature"
         },
-        "flutter-utils.codeLens.testFunctions": {
+        "flutter-toolkit.codeLens.testFunctions": {
           "type": "array",
           "default": [
             "test",
@@ -114,7 +112,7 @@
           ],
           "description": "Functions that should be considered as test functions (test, blocTest, testWidgets, patrolTest by default)"
         },
-        "flutter-utils.synchronisation.onRename": {
+        "flutter-toolkit.synchronisation.onRename": {
           "type": "string",
           "enum": [
             "Always",
