@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
-import { ConfigurationUtils } from '../utils/configuration-utils';
-import { getDocumentSymbols } from '../utils/symbols.utils';
+import { ConfigurationUtils } from '../utils/configuration.utils';
+import { getDocumentSymbols } from '../utils/document-utils';
+import { generateConstructor } from './actions/generate-constrcutor';
+import { generateCopyWith } from './actions/generate-copy-with';
 import { generateEquatable } from './actions/generate-equatable';
 import { generateToString } from './actions/generate-to-string';
 import { implementJsonSerializable } from './actions/implement-json-serializable';
@@ -44,13 +46,21 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
         document,
       );
 
-      // const actionCopyWith = new UtilityCodeAction(
-      //   'Generate copyWith',
-      //   vscode.CodeActionKind.QuickFix,
-      //   UtilityActionType.generateCopyWith,
-      //   selectedSymbol,
-      //   document,
-      // );
+      const actionNamedConstructor = new UtilityCodeAction(
+        'Generate constructor',
+        vscode.CodeActionKind.QuickFix,
+        UtilityActionType.generateConstructor,
+        selectedSymbol,
+        document,
+      );
+
+      const actionCopyWith = new UtilityCodeAction(
+        'Generate copyWith',
+        vscode.CodeActionKind.QuickFix,
+        UtilityActionType.generateCopyWith,
+        selectedSymbol,
+        document,
+      );
 
       const actionJsonSerializable = new UtilityCodeAction(
         'Implement @JsonSerializable',
@@ -67,7 +77,13 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
         selectedSymbol,
         document,
       );
-      return resolve([actionToString, actionEquatable, actionJsonSerializable]);
+      return resolve([
+        actionNamedConstructor,
+        actionCopyWith,
+        actionEquatable,
+        actionToString,
+        actionJsonSerializable,
+      ]);
     });
   }
   resolveCodeAction?(
@@ -78,24 +94,36 @@ export class UtilityActionProvider implements vscode.CodeActionProvider {
       return codeAction;
     }
 
-    switch (codeAction.type) {
-      case UtilityActionType.generateCopyWith:
-      case UtilityActionType.generateEquatable:
-        generateEquatable(codeAction);
-        break;
+    return new Promise(async (resolve) => {
+      switch (codeAction.type) {
+        case UtilityActionType.generateCopyWith:
+          await generateCopyWith(codeAction);
+          break;
 
-      case UtilityActionType.implementJsonSerializable:
-        implementJsonSerializable(codeAction);
-        break;
+        case UtilityActionType.generateEquatable:
+          await generateEquatable(codeAction);
+          break;
 
-      case UtilityActionType.generateToString:
-        generateToString(codeAction);
-        break;
+        case UtilityActionType.implementJsonSerializable:
+          await implementJsonSerializable(codeAction);
+          break;
 
-      default:
-        break;
-    }
+        case UtilityActionType.generateToString:
+          await generateToString(codeAction);
+          break;
 
-    return codeAction;
+        case UtilityActionType.generateToString:
+          await generateToString(codeAction);
+          break;
+
+        case UtilityActionType.generateConstructor:
+          await generateConstructor(codeAction);
+          break;
+
+        default:
+          break;
+      }
+      resolve(codeAction);
+    });
   }
 }

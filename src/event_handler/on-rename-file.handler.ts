@@ -1,7 +1,7 @@
 import { renameSync } from 'fs';
 import * as vscode from 'vscode';
 import { analyticsService } from '../services/analytics.service';
-import { ConfigurationUtils } from '../utils/configuration-utils';
+import { ConfigurationUtils } from '../utils/configuration.utils';
 import { isFileExisting } from '../utils/files-utils';
 import { output } from '../utils/output-channel';
 import { getAbsoluteTestFile, getRelativePath } from '../utils/utils';

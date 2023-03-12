@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ClassDataCodeLens } from '../models/class-data-code-lens';
 import { analyticsService } from '../services/analytics.service';
-import { CodeLensUtils } from '../utils/code-lens-utils';
+import { CodeLensUtils } from '../utils/code-lens.utils';
 const fs = require('fs');
 
 export class TestLensProvider implements vscode.CodeLensProvider {

@@ -2,11 +2,11 @@
   "name": "flutter-utils",
   "displayName": "Flutter Toolkit",
   "publisher": "AdrienAudouard",
-  "description": "Generate toString, equatable, JsonSerializable methods, sync tests folders and many more",
+  "description": "Generate toString, equatable, copyWith, constructor, JsonSerializable methods, sync tests folders and many more",
   "bugs": "https://github.com/AdrienAudouard/flutter-utils/issues",
   "homepage": "https://github.com/AdrienAudouard/flutter-utils",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "engines": {
     "vscode": "^1.52.0"
   },
@@ -56,22 +56,22 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "flutter-utils.goTestFile",
+          "command": "flutter-toolkit.goTestFile",
           "when": "resourceLangId == dart && resourceFilename =~ /(?<!_test)\\.dart/"
         },
         {
-          "command": "flutter-utils.goSourceFile",
+          "command": "flutter-toolkit.goSourceFile",
           "when": "resourceLangId == dart && resourceFilename =~ /_test.dart/"
         }
       ],
       "editor/title": [
         {
-          "command": "flutter-utils.goTestFile",
+          "command": "flutter-toolkit.goTestFile",
           "group": "navigation",
           "when": "resourceLangId == dart && resourceFilename =~ /(?<!_test)\\.dart/"
         },
         {
-          "command": "flutter-utils.goSourceFile",
+          "command": "flutter-toolkit.goSourceFile",
           "group": "navigation",
           "when": "resourceLangId == dart && resourceFilename =~ /_test.dart/"
         }
@@ -90,10 +90,15 @@
           "default": "0.80",
           "description": "When the test file is not found, the extension will made some suggestion by searching the closest search test file with a score above this settings (0.8 by default and must be between 0 and 1)"
         },
-        "flutter-toolkit.quickFixes": {
+        "flutter-toolkit.quickFixes.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable quick fixes (generate equatable and copyWith methods)"
+        },
+        "flutter-toolkit.quickFixes.copyWithConstructor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically generate a default constructor when generating the copyWith method."
         },
         "flutter-toolkit.suggestions.renameTestFile": {
           "type": "boolean",

@@ -6,7 +6,7 @@ const JSON_ANNOTATION_IMPORT =
   "import 'package:json_annotation/json_annotation.dart';";
 const JSON_ANNOTATION = '@JsonSerializable()';
 
-export function implementJsonSerializable(action: UtilityCodeAction) {
+export async function implementJsonSerializable(action: UtilityCodeAction) {
   const edit = new WorkspaceEdit();
 
   const importContent = getImportContent(action);
@@ -23,7 +23,7 @@ export function implementJsonSerializable(action: UtilityCodeAction) {
   const methodsPosition = new Position(action.symbol.range.end.line, 0);
   edit.insert(action.document.uri, methodsPosition, methodsContent);
 
-  workspace.applyEdit(edit);
+  await workspace.applyEdit(edit);
 }
 
 function getImportContent(action: UtilityCodeAction) {

@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import * as vscode from 'vscode';
 import { MixpanelApi } from '../api/mixpanel.api';
-import { ConfigurationUtils } from '../utils/configuration-utils';
+import { ConfigurationUtils } from '../utils/configuration.utils';
 
 class AnalyticsService {
   mixpanelApi: MixpanelApi | undefined;

@@ -1,10 +1,16 @@
 # Change Log
 
+## 2.1.0 - 2023-03-12
+
+### Added
+
+- Add `copyWith` generation
+
 ## 2.0.0 - 2023-03-11
 
 ### Added
 
-- Generate toString, Equatable and JsonSerializable methods
+- Generate `constructor`, `toString`, `Equatable` and JsonSerializable methods
 - Rename extension from `Flutter Test Utils` to `Flutter Toolkit`
 
 ## 1.5.0 - 2023-03-06

@@ -63,7 +63,19 @@ export class ConfigurationUtils {
   }
 
   public static isQuickFixesEnabled(): boolean {
-    return this.getConfigurationValue('flutter-toolkit', 'quickFixes') ?? false;
+    return (
+      this.getConfigurationValue('flutter-toolkit.quickFixes', 'enabled') ??
+      false
+    );
+  }
+
+  public static generateConstructorWithCopyWith(): boolean {
+    return (
+      this.getConfigurationValue(
+        'flutter-toolkit.quickFixes',
+        'copyWithConstructor',
+      ) ?? false
+    );
   }
 
   public static getTestFunctionsName(): string[] {

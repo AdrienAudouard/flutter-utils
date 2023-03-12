@@ -1,4 +1,4 @@
-import { ConfigurationUtils } from './configuration-utils';
+import { ConfigurationUtils } from './configuration.utils';
 
 const fs = require('fs');
 const stringSimilarity = require('string-similarity');

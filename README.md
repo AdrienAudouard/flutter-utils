@@ -4,7 +4,7 @@ Provide some utils functions when you write tests with Flutter.
 
 The features are :
 
-- 🚀 Generate `toString` and Equatable (`props`) methods
+- 🚀 Generate `toString`, `copyWith`, `constructor` and Equatable (`props`) methods
 - 🚀 Implement JsonSerializable methods
 - 🚀 Open the test file related to the source code opened
 - 🚀 Create a test file directly with a button

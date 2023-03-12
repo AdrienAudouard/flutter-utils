@@ -1,7 +1,7 @@
 import { Position, SymbolKind, workspace, WorkspaceEdit } from 'vscode';
 import { UtilityCodeAction } from '../utility-code-action';
 
-export function generateEquatable(action: UtilityCodeAction) {
+export async function generateEquatable(action: UtilityCodeAction) {
   const propertySymbols = action.symbol.children.filter(
     (symbol) => symbol.kind === SymbolKind.Field,
   );
@@ -25,7 +25,7 @@ export function generateEquatable(action: UtilityCodeAction) {
     edit.insert(action.document.uri, insertPosition, '\n@override\n' + content);
   }
 
-  workspace.applyEdit(edit);
+  await workspace.applyEdit(edit);
 }
 
 function getEquatableMethod(content: string) {

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { ConfigurationUtils } from '../utils/configuration-utils';
+import { ConfigurationUtils } from '../utils/configuration.utils';
 import { onEditorChangedWrapper } from './on-active-editor-change.handler';
 import { onRenameFiles } from './on-rename-file.handler';
 

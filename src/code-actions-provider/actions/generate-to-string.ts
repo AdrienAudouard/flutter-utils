@@ -1,7 +1,7 @@
 import { Position, SymbolKind, workspace, WorkspaceEdit } from 'vscode';
 import { UtilityCodeAction } from '../utility-code-action';
 
-export function generateToString(action: UtilityCodeAction) {
+export async function generateToString(action: UtilityCodeAction) {
   const edit = new WorkspaceEdit();
 
   const previousToString = action.symbol.children.find(
@@ -20,7 +20,7 @@ export function generateToString(action: UtilityCodeAction) {
     );
   }
 
-  workspace.applyEdit(edit);
+  await workspace.applyEdit(edit);
 }
 
 function getToStringMethodContent(action: UtilityCodeAction) {
