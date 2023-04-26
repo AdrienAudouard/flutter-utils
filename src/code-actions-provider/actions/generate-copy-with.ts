@@ -1,21 +1,21 @@
-import { Position, SymbolKind, workspace, WorkspaceEdit } from 'vscode';
-import { ConfigurationUtils } from '../../utils/configuration.utils';
-import { getSymbolType } from '../../utils/symbols.utils';
-import { isTypeNullable } from '../../utils/type.utils';
-import { UtilityCodeAction } from '../utility-code-action';
-import { updateEditWithConstructor } from './generate-constrcutor';
+import { Position, SymbolKind, workspace, WorkspaceEdit } from "vscode";
+import { ConfigurationUtils } from "../../utils/configuration.utils";
+import { getSymbolType } from "../../utils/symbols.utils";
+import { isTypeNullable } from "../../utils/type.utils";
+import { UtilityCodeAction } from "../utility-code-action";
+import { updateEditWithConstructor } from "./generate-constrcutor";
 
 const FLUTTER_MATERIAL_IMPORT = "import 'package:flutter/material.dart';";
 
 export async function generateCopyWith(action: UtilityCodeAction) {
   const propertySymbols = action.symbol.children.filter(
-    (symbol) => symbol.kind === SymbolKind.Field,
+    (symbol) => symbol.kind === SymbolKind.Field
   );
 
   const types = await Promise.all(
     propertySymbols.map(async (symbol) => {
       return getSymbolType(action.document.uri, symbol);
-    }),
+    })
   );
 
   const copyWithContent = await getCopyWithMethodContent(action, types);
@@ -23,7 +23,7 @@ export async function generateCopyWith(action: UtilityCodeAction) {
   const edit = new WorkspaceEdit();
 
   const previousCopyWith = action.symbol.children.find(
-    (symbol) => symbol.name === 'copyWith',
+    (symbol) => symbol.name === "copyWith"
   );
 
   if (previousCopyWith) {
@@ -37,7 +37,7 @@ export async function generateCopyWith(action: UtilityCodeAction) {
     edit.insert(
       action.document.uri,
       new Position(0, 0),
-      FLUTTER_MATERIAL_IMPORT + '\n',
+      FLUTTER_MATERIAL_IMPORT + "\n"
     );
   }
 
@@ -50,10 +50,10 @@ export async function generateCopyWith(action: UtilityCodeAction) {
 
 async function getCopyWithMethodContent(
   action: UtilityCodeAction,
-  types: (string | undefined)[],
+  types: (string | undefined)[]
 ) {
   const propertySymbols = action.symbol.children.filter(
-    (symbol) => symbol.kind === SymbolKind.Field,
+    (symbol) => symbol.kind === SymbolKind.Field
   );
 
   const functionParams = propertySymbols
@@ -64,7 +64,7 @@ async function getCopyWithMethodContent(
       }
       return `    ${type}? ${symbol.name}`;
     })
-    .join(',\n');
+    .join(",\n");
 
   const constructorParams = propertySymbols
     .map((symbol, index) => {
@@ -75,7 +75,7 @@ async function getCopyWithMethodContent(
 
       return `      ${symbol.name}: ${symbol.name} ?? this.${symbol.name}`;
     })
-    .join(',\n');
+    .join(",\n");
 
   return `  ${action.symbol.name} copyWith({
 ${functionParams}    
@@ -87,5 +87,5 @@ ${functionParams}
 }
 
 function containsNullable(types: (string | undefined)[]): boolean {
-  return types.find((type) => isTypeNullable(type ?? '')) !== undefined;
+  return types.find((type) => isTypeNullable(type ?? "")) !== undefined;
 }

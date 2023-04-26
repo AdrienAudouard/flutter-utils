@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.1.1 - 2023-04-2612
+
+### BugFixes
+
+- Fix `copyWith` generation with dynamic types
+
 ## 2.1.0 - 2023-03-12
 
 ### Added

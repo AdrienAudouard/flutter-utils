@@ -6,7 +6,7 @@
   "bugs": "https://github.com/AdrienAudouard/flutter-utils/issues",
   "homepage": "https://github.com/AdrienAudouard/flutter-utils",
   "repository": "https://github.com/AdrienAudouard/flutter-utils",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "engines": {
     "vscode": "^1.52.0"
   },
